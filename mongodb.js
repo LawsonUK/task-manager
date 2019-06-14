@@ -85,5 +85,61 @@ MongoClient.connect(
 
 				return console.log('No tasks found')
 			})
+
+		// db.collection('users')
+		// 	.updateOne(
+		// 		{
+		// 			_id: new ObjectID('5cfd4dd63045d231cf04a6c0')
+		// 		},
+		// 		{
+		// 			$inc: {
+		// 				age: 1
+		// 			}
+		// 		}
+		// 	)
+		// 	.then(result => {
+		// 		console.log(result)
+		// 	})
+		// 	.catch(error => {
+		// 		console.log(error)
+		// 	})
+
+		// db.collection('tasks')
+		// 	.updateMany(
+		// 		{ completed: false },
+		// 		{
+		// 			$set: {
+		// 				completed: true
+		// 			}
+		// 		}
+		// 	)
+		// 	.then(result => {
+		// 		console.log('Success!', result)
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('Error! ', error)
+		// 	})
+
+		// db.collection('users')
+		// 	.deleteMany({
+		// 		age: 35
+		// 	})
+		// 	.then(result => {
+		// 		console.log(result)
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('Error! ', error)
+		// 	})
+
+		db.collection('tasks')
+			.deleteOne({
+				description: 'Clean the kitchen'
+			})
+			.then(result => {
+				console.log(result)
+			})
+			.catch(error => {
+				console.log(error)
+			})
 	}
 )
