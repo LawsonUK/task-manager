@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
-const jwt = reqiuire('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 const userSchema = mongoose.Schema({
 	name: {
@@ -41,18 +41,20 @@ const userSchema = mongoose.Schema({
 			}
 		}
 	},
-	tokens: [{
-		token: {
-			type: String,
-			required: true
+	tokens: [
+		{
+			token: {
+				type: String,
+				required: true
+			}
 		}
-	}]
+	]
 })
 
 userSchema.methods.generateAuthToken = async function() {
 	const user = this
-	const token = jwt.sign({ _id: user._id.toString()}, 'thisismynewcourse')
-	user.tokens = user.tokens.concat({token})
+	const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
+	user.tokens = user.tokens.concat({ token })
 	await user.save()
 	return token
 }
