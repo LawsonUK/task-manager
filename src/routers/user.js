@@ -22,7 +22,7 @@ router.post('/users/login', async (req, res) => {
 		)
 		const token = await user.generateAuthToken()
 		res.send({
-			user: user.getPublicProfile(),
+			user,
 			token
 		})
 	} catch (e) {
@@ -56,19 +56,6 @@ router.get('/users/me', auth, async (req, res) => {
 	res.send(req.user)
 })
 
-router.get('/users/:id', async (req, res) => {
-	const _id = req.params.id
-	try {
-		const user = await User.findById(_id)
-		if (!user) {
-			return res.status(404).send()
-		}
-		res.send(user)
-	} catch (e) {
-		res.status(500).send()
-	}
-})
-
 router.patch('/users/:id', async (req, res) => {
 	const updates = Object.keys(req.body)
 	const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -95,9 +82,9 @@ router.patch('/users/:id', async (req, res) => {
 	}
 })
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/me', auth, async (req, res) => {
 	try {
-		const user = await User.findByIdAndDelete(req.params.id)
+		const user = await User.findByIdAndDelete(req.user._id)
 
 		if (!user) {
 			return res.status(404).send()
